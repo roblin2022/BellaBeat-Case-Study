@@ -1,0 +1,11 @@
+Data 
+
+● FitBit Fitness Tracker Data (CC0: Public Domain, dataset made available through Mobius): This Kaggle data set
+contains personal fitness tracker from thirty fitbit users. Thirty eligible Fitbit users consented to the submission of
+personal tracker data, including minute-level output for physical activity, heart rate, and sleep monitoring. It includes
+information about daily activity, steps, and heart rate that can be used to explore users’ habits.
+Sršen tells you that this data set might have some limitations, and encourages you to consider adding another data to help
+address those limitations as you begin to work more with this data.
+
+
+https://www.kaggle.com/datasets/arashnic/fitbit/code
