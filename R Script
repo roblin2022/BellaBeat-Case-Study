@@ -1,0 +1,54 @@
+install.packages("tidyverse")
+install.packages("lubridate")
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("tidyr")
+library(tidyverse)
+library(lubridate)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+calories <- read.csv("dailyCalories_merged.csv")
+steps <- read.csv("hourlySteps_merged.csv")
+activity <-read.csv("dailyActivity_merged.csv")
+intensity <-read.csv("hourlyIntensities_merged.csv")
+sleep <-read.csv("sleepDay_merged.csv")
+head(activity)
+head(steps)
+head(calories)
+head(intensity)
+head(sleep)
+View(activity)
+intensity$ActivityHour=as.POSIXct(intensity$ActivityHour, format="%m/%d/%Y %I:%M:%S %p", tz=Sys.timezone())
+intensity$time <- format(intensity$ActivityHour, format = "%H:%M:%S")
+intensity$date <- format(intensity$ActivityHour, format = "%m/%d/%y")
+head(intensity)
+head(steps)
+steps$ActivityHour=as.POSIXct(steps$ActivityHour, format="%m/%d/%Y %I:%M:%S %p", tz=Sys.timezone())
+steps$time <- format(steps$ActivityHour, format = "%H:%M:%S")
+steps$date <- format(steps$ActivityHour, format = "%m/%d/%y")
+head(steps)
+sum(duplicated(activity))
+sum(duplicated(steps))
+sum(duplicated(intensity))
+sum(duplicated(sleep))
+sum(duplicated(calories))
+sleep <- sleep %>% distinct() %>% drop()
+sum(duplicated(sleep))
+ggplot(data=activity, aes(x=VeryActiveMinutes, y=Calories)) +
+geom_point() + geom_smooth() + labs(title="Very Active Minute vs Calories ")
+ggplot(data=int_new, aes(x=time, y=mean_total_int)) + geom_histogram(stat = "identity", fill='darkgrey') +
+theme(axis.text.x = element_text(angle = 90)) +
+labs(title="Average Total Steps vs. Time")
+int_new <- steps %>%
+group_by(time) %>%
+drop_na() %>%
+summarise(mean_total_int = mean(StepTotal))
+ggplot(data=int_new, aes(x=time, y=mean_total_int)) + geom_histogram(stat = "identity", fill='darkgrey') +
+theme(axis.text.x = element_text(angle = 90)) +
+labs(title="Average Total Steps vs. Time")
+ggplot(data=activity, aes(x=SedentaryMinutes, y=Calories)) +
+geom_point() + geom_smooth() + labs(title="Sedentary Minutes vs Calories ")
+ggplot(data=activity, aes(x=TotalSteps, y=Calories)) +
+geom_point() + geom_smooth() + labs(title="Total Steps vs. Calories")
+source("/cloud/project/Fitness Track.R")
